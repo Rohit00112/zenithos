@@ -1,0 +1,67 @@
+# Zenith OS — Base Packages
+# Packages installed via debootstrap
+# One package per line, comments start with #
+
+# Essential system
+systemd
+systemd-sysv
+dbus
+udev
+sudo
+locales
+console-setup
+
+# Kernel
+linux-image-amd64
+linux-headers-amd64
+firmware-linux-free
+
+# Filesystem
+btrfs-progs
+e2fsprogs
+dosfstools
+
+# Networking
+network-manager
+iproute2
+iputils-ping
+wget
+curl
+ca-certificates
+openssh-client
+nftables
+
+# Audio/Video
+pipewire
+pipewire-pulse
+pipewire-alsa
+wireplumber
+
+# Wayland
+foot
+weston
+
+# Basic tools
+bash
+vim-tiny
+nano
+less
+htop
+procps
+psmisc
+file
+tree
+git
+rsync
+man-db
+
+# Boot
+grub-efi-amd64
+grub-pc-bin
+efibootmgr
+
+# Hardware
+pciutils
+usbutils
+lshw
+dmidecode

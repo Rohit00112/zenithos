@@ -1,0 +1,138 @@
+/* Zenith OS — GTK4 Theme: Zenith Dark
+ *
+ * Custom GTK4 CSS for consistent styling across all Zenith applications.
+ * Applied system-wide via ~/.config/gtk-4.0/gtk.css
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+/* ===== Color Definitions ===== */
+@define-color bg_primary #0d1117;
+@define-color bg_secondary #161b22;
+@define-color bg_elevated #1c2128;
+@define-color text_primary #e6edf3;
+@define-color text_secondary #8b949e;
+@define-color accent #58a6ff;
+@define-color accent_hover #79c0ff;
+@define-color success #3fb950;
+@define-color warning #d29922;
+@define-color danger #f85149;
+@define-color border_color #30363d;
+
+/* ===== Window ===== */
+window {
+    background-color: @bg_primary;
+    color: @text_primary;
+}
+
+/* ===== Headerbar ===== */
+headerbar {
+    background-color: @bg_secondary;
+    border-bottom: 1px solid @border_color;
+    color: @text_primary;
+    min-height: 36px;
+}
+
+headerbar title {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* ===== Buttons ===== */
+button {
+    background-color: @bg_elevated;
+    color: @text_primary;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: 500;
+    transition: all 150ms ease;
+}
+
+button:hover {
+    background-color: alpha(@accent, 0.15);
+    border-color: @accent;
+}
+
+button:active {
+    background-color: alpha(@accent, 0.25);
+}
+
+button.suggested-action {
+    background-color: @accent;
+    color: white;
+    border-color: @accent;
+}
+
+button.suggested-action:hover {
+    background-color: @accent_hover;
+}
+
+button.destructive-action {
+    background-color: @danger;
+    color: white;
+    border-color: @danger;
+}
+
+/* ===== Entry (text input) ===== */
+entry {
+    background-color: @bg_elevated;
+    color: @text_primary;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 10px;
+    caret-color: @accent;
+}
+
+entry:focus {
+    border-color: @accent;
+    box-shadow: 0 0 0 2px alpha(@accent, 0.2);
+}
+
+/* ===== Lists ===== */
+listview, list {
+    background-color: transparent;
+}
+
+listview > row, list > row {
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 1px 4px;
+    transition: background-color 100ms ease;
+}
+
+listview > row:hover, list > row:hover {
+    background-color: alpha(@accent, 0.08);
+}
+
+listview > row:selected, list > row:selected {
+    background-color: alpha(@accent, 0.2);
+}
+
+/* ===== Scrollbar ===== */
+scrollbar slider {
+    background-color: alpha(@text_secondary, 0.3);
+    border-radius: 100px;
+    min-width: 6px;
+    min-height: 6px;
+}
+
+scrollbar slider:hover {
+    background-color: alpha(@text_secondary, 0.5);
+}
+
+/* ===== Separator ===== */
+separator {
+    background-color: @border_color;
+    min-height: 1px;
+    min-width: 1px;
+}
+
+/* ===== Tooltip ===== */
+tooltip {
+    background-color: @bg_elevated;
+    color: @text_primary;
+    border: 1px solid @border_color;
+    border-radius: 6px;
+    padding: 6px 10px;
+}

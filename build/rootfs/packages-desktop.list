@@ -1,0 +1,16 @@
+# Zenith OS — Desktop Packages
+# Additional packages installed after base system
+# These are for the graphical desktop environment
+
+# Wayland compositor dependencies
+libwlroots-dev
+libwayland-dev
+libxkbcommon-dev
+libpixman-1-dev
+
+# GTK4 and dependencies
+libgtk-4-dev
+libgtk4-layer-shell-dev
+
+# Display manager (minimal)
+greetd

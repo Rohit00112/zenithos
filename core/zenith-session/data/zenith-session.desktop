@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Zenith
+Comment=Zenith OS Desktop Session
+Exec=zenith-session
+Type=Application
+DesktopNames=Zenith

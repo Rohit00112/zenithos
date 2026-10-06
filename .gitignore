@@ -1,0 +1,24 @@
+.gitignore contents:
+
+# Build artifacts
+*/builddir/
+dist/
+*.iso
+*.qcow2
+
+# Rust
+cli/target/
+
+# Root filesystem (large, generated)
+build/rootfs/rootfs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

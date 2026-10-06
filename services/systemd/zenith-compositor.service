@@ -1,0 +1,14 @@
+[Unit]
+Description=Zenith Compositor
+Documentation=man:zenith-compositor(1)
+After=graphical.target
+Wants=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/zenith-compositor
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical.target

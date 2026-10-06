@@ -1,0 +1,63 @@
+# Zenith OS — Reproducible Build Container
+#
+# This Dockerfile creates a build environment that can
+# produce the Zenith OS ISO reproducibly.
+#
+# Usage:
+#   docker build -t zenith-builder -f build/docker/Dockerfile.build .
+#   docker run --rm --privileged -v $(PWD)/dist:/workspace/dist zenith-builder make iso
+
+FROM --platform=linux/amd64 debian:bookworm
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    # Build tools
+    build-essential \
+    meson \
+    ninja-build \
+    pkg-config \
+    cmake \
+    git \
+    # Rust
+    curl \
+    # Rootfs and ISO
+    debootstrap \
+    squashfs-tools \
+    grub-common \
+    grub2-common \
+    grub-pc-bin \
+    grub-efi-amd64-bin \
+    grub-efi-amd64-signed \
+    xorriso \
+    mtools \
+    dosfstools \
+    # Wayland/wlroots dependencies
+    libwlroots-dev \
+    libwayland-dev \
+    wayland-protocols \
+    libxkbcommon-dev \
+    libpixman-1-dev \
+    libdrm-dev \
+    libgbm-dev \
+    libseat-dev \
+    libudev-dev \
+    libinput-dev \
+    libvulkan-dev \
+    # GTK4
+    libgtk-4-dev \
+    libgtk4-layer-shell-dev \
+    # Misc
+    sudo \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | \
+    sh -s -- -y --default-toolchain stable
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+WORKDIR /workspace
+COPY . /workspace
+
+CMD ["make", "all"]

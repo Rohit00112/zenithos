@@ -1,0 +1,14 @@
+[Unit]
+Description=Zenith Session Manager
+Documentation=man:zenith-session(1)
+After=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/zenith-session
+User=%I
+Environment=XDG_SESSION_TYPE=wayland
+Environment=XDG_CURRENT_DESKTOP=Zenith
+
+[Install]
+WantedBy=graphical.target

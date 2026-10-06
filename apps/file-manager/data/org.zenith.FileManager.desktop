@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Files
+GenericName=File Manager
+Comment=Browse the file system
+Exec=zenith-file-manager
+Icon=system-file-manager-symbolic
+Terminal=false
+Type=Application
+Categories=System;Core;
+StartupNotify=true

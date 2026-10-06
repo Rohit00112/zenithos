@@ -132,7 +132,47 @@ fi\
 # Copy wallpaper\
 if [[ -f "$PROJECT_DIR/desktop/zenith-wallpaper/builddir/zenith-wallpaper" ]]; then\
     cp "$PROJECT_DIR/desktop/zenith-wallpaper/builddir/zenith-wallpaper" "$ZENITH_BIN_DIR/"\
-    ok "Installed zenith-wallpaper"
+    ok "Installed zenith-wallpaper"\
+fi\
+\
+# Copy terminal\
+if [[ -f "$PROJECT_DIR/apps/terminal/builddir/zenith-terminal" ]]; then\
+    cp "$PROJECT_DIR/apps/terminal/builddir/zenith-terminal" "$ZENITH_BIN_DIR/"\
+    ok "Installed zenith-terminal"\
+fi\
+\
+# Copy system-monitor\
+if [[ -f "$PROJECT_DIR/apps/system-monitor/builddir/zenith-system-monitor" ]]; then\
+    cp "$PROJECT_DIR/apps/system-monitor/builddir/zenith-system-monitor" "$ZENITH_BIN_DIR/"\
+    ok "Installed zenith-system-monitor"\
+fi\
+\
+# Copy file-manager\
+if [[ -f "$PROJECT_DIR/apps/file-manager/builddir/zenith-file-manager" ]]; then\
+    cp "$PROJECT_DIR/apps/file-manager/builddir/zenith-file-manager" "$ZENITH_BIN_DIR/"\
+    ok "Installed zenith-file-manager"\
+fi\
+\
+# Copy settings\
+if [[ -f "$PROJECT_DIR/apps/settings/builddir/zenith-settings" ]]; then\
+    cp "$PROJECT_DIR/apps/settings/builddir/zenith-settings" "$ZENITH_BIN_DIR/"\
+    ok "Installed zenith-settings"\
+fi\
+\
+# Copy network-center\
+if [[ -f "$PROJECT_DIR/apps/network-center/builddir/zenith-network-center" ]]; then\
+    cp "$PROJECT_DIR/apps/network-center/builddir/zenith-network-center" "$ZENITH_BIN_DIR/"\
+    ok "Installed zenith-network-center"\
+    mkdir -p "$ROOTFS_DIR/usr/share/applications"\
+    cp "$PROJECT_DIR/apps/network-center/data/org.zenith.NetworkCenter.desktop" "$ROOTFS_DIR/usr/share/applications/"\
+    mkdir -p "$ROOTFS_DIR/usr/share/applications"\
+    cp "$PROJECT_DIR/apps/settings/data/org.zenith.Settings.desktop" "$ROOTFS_DIR/usr/share/applications/"\
+    mkdir -p "$ROOTFS_DIR/usr/share/applications"\
+    cp "$PROJECT_DIR/apps/file-manager/data/org.zenith.FileManager.desktop" "$ROOTFS_DIR/usr/share/applications/"\
+    mkdir -p "$ROOTFS_DIR/usr/share/applications"\
+    cp "$PROJECT_DIR/apps/system-monitor/data/org.zenith.SystemMonitor.desktop" "$ROOTFS_DIR/usr/share/applications/"\
+    mkdir -p "$ROOTFS_DIR/usr/share/applications"\
+    cp "$PROJECT_DIR/apps/terminal/data/org.zenith.Terminal.desktop" "$ROOTFS_DIR/usr/share/applications/"
 fi
 
 # Copy session manager

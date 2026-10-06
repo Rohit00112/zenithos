@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Network
+GenericName=Network Settings
+Comment=Manage connections
+Exec=zenith-network-center
+Icon=network-wireless-symbolic
+Terminal=false
+Type=Application
+Categories=Settings;Network;
+StartupNotify=true

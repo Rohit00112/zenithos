@@ -68,3 +68,6 @@ dmidecode
 
 # GTK4 and Layer Shell
 libgtk-4-1
+
+# VTE Terminal
+libvte-2.91-gtk4-0

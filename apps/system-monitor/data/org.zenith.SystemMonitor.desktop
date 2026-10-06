@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=System Monitor
+GenericName=Task Manager
+Comment=Monitor system resources and processes
+Exec=zenith-system-monitor
+Icon=utilities-system-monitor-symbolic
+Terminal=false
+Type=Application
+Categories=System;
+StartupNotify=true

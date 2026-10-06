@@ -18,8 +18,18 @@
 - [x] zenith-session (session manager)
 - [x] osctl system status / network / hardware / service / troubleshoot
 - [x] Root filesystem (debootstrap)
-- [ ] ISO generation
-- [ ] QEMU testing
+- [x] ISO generation
+- [x] QEMU testing
+
+## Phase 2 — Base Applications
+
+- [x] zenith-terminal (VTE based)
+- [x] zenith-launcher (application launcher)
+- [x] zenith-wallpaper (desktop background)
+- [x] zenith-file-manager (GUI file browser)
+- [x] zenith-system-monitor (task manager)
+- [x] zenith-settings (control center)
+- [x] zenith-network-center (Phase 3 stub)
 
 ## Known Working Configurations
 

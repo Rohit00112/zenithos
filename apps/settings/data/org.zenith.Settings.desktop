@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Settings
+GenericName=System Settings
+Comment=Configure your system
+Exec=zenith-settings
+Icon=preferences-system-symbolic
+Terminal=false
+Type=Application
+Categories=Settings;System;
+StartupNotify=true

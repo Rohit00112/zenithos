@@ -13,8 +13,8 @@ use anyhow::Result;
 use chrono::Local;
 use clap::Subcommand;
 use colored::Colorize;
-use sysinfo::System;
 use std::fs;
+use sysinfo::System;
 
 #[derive(Subcommand)]
 pub enum SystemAction {
@@ -42,7 +42,11 @@ fn show_status() -> Result<()> {
 
     // Header
     println!();
-    println!("  {} {}", "⬢".bright_blue(), "Zenith OS".bold().bright_white());
+    println!(
+        "  {} {}",
+        "⬢".bright_blue(),
+        "Zenith OS".bold().bright_white()
+    );
     println!("  {}", "─".repeat(40).dimmed());
 
     // Hostname
@@ -70,7 +74,11 @@ fn show_status() -> Result<()> {
 
     // Date/time
     let now = Local::now();
-    println!("  {}      {}", "Time:".dimmed(), now.format("%Y-%m-%d %H:%M:%S").to_string().bright_white());
+    println!(
+        "  {}      {}",
+        "Time:".dimmed(),
+        now.format("%Y-%m-%d %H:%M:%S").to_string().bright_white()
+    );
 
     println!();
     println!("  {}", "─".repeat(40).dimmed());
@@ -82,10 +90,12 @@ fn show_status() -> Result<()> {
     } else {
         "unknown".to_string()
     };
-    println!("  {}       {} ({})",
+    println!(
+        "  {}       {} ({})",
         "CPU:".dimmed(),
         cpu_name.bright_white(),
-        format!("{} cores", cpu_count).dimmed());
+        format!("{} cores", cpu_count).dimmed()
+    );
 
     // Memory
     let total_mem = sys.total_memory();
@@ -95,29 +105,37 @@ fn show_status() -> Result<()> {
     } else {
         0
     };
-    println!("  {}    {} / {} ({}%)",
+    println!(
+        "  {}    {} / {} ({}%)",
         "Memory:".dimmed(),
         format_bytes(used_mem).bright_white(),
         format_bytes(total_mem).dimmed(),
-        colorize_percent(mem_percent));
+        colorize_percent(mem_percent)
+    );
 
     // Swap
     let total_swap = sys.total_swap();
     let used_swap = sys.used_swap();
     if total_swap > 0 {
         let swap_percent = (used_swap as f64 / total_swap as f64 * 100.0) as u64;
-        println!("  {}      {} / {} ({}%)",
+        println!(
+            "  {}      {} / {} ({}%)",
             "Swap:".dimmed(),
             format_bytes(used_swap).bright_white(),
             format_bytes(total_swap).dimmed(),
-            colorize_percent(swap_percent));
+            colorize_percent(swap_percent)
+        );
     }
 
     // Load average
     let load = System::load_average();
-    println!("  {}      {:.2} {:.2} {:.2}",
+    println!(
+        "  {}      {:.2} {:.2} {:.2}",
         "Load:".dimmed(),
-        load.one, load.five, load.fifteen);
+        load.one,
+        load.five,
+        load.fifteen
+    );
 
     // Disk usage (root)
     let disks = sysinfo::Disks::new_with_refreshed_list();
@@ -131,29 +149,39 @@ fn show_status() -> Result<()> {
             } else {
                 0
             };
-            println!("  {}  {} / {} ({}%) [{}]",
+            println!(
+                "  {}  {} / {} ({}%) [{}]",
                 "Disk (/):".dimmed(),
                 format_bytes(used).bright_white(),
                 format_bytes(total).dimmed(),
                 colorize_percent(percent),
-                disk.file_system().to_string_lossy().dimmed());
+                disk.file_system().to_string_lossy().dimmed()
+            );
             break;
         }
     }
 
     // Processes
     let proc_count = sys.processes().len();
-    println!("  {} {}",
+    println!(
+        "  {} {}",
         "Processes:".dimmed(),
-        proc_count.to_string().bright_white());
+        proc_count.to_string().bright_white()
+    );
 
     println!();
 
     // Status indicators
     println!("  {}", "Services".bold());
-    print_status("Compositor", check_process_running(&sys, "zenith-compositor"));
+    print_status(
+        "Compositor",
+        check_process_running(&sys, "zenith-compositor"),
+    );
     print_status("Panel", check_process_running(&sys, "zenith-panel"));
-    print_status("NetworkManager", check_process_running(&sys, "NetworkManager"));
+    print_status(
+        "NetworkManager",
+        check_process_running(&sys, "NetworkManager"),
+    );
     print_status("PipeWire", check_process_running(&sys, "pipewire"));
 
     println!();
@@ -162,7 +190,9 @@ fn show_status() -> Result<()> {
 }
 
 fn check_process_running(sys: &System, name: &str) -> bool {
-    sys.processes().values().any(|p| p.name().to_string_lossy().contains(name))
+    sys.processes()
+        .values()
+        .any(|p| p.name().to_string_lossy().contains(name))
 }
 
 fn print_status(name: &str, running: bool) {
@@ -197,7 +227,11 @@ fn colorize_percent(percent: u64) -> colored::ColoredString {
 
 fn show_not_implemented(feature: &str) -> Result<()> {
     println!();
-    println!("  {} {} is not implemented yet.", "⚠".bright_yellow(), feature);
+    println!(
+        "  {} {} is not implemented yet.",
+        "⚠".bright_yellow(),
+        feature
+    );
     println!("  This feature will be available in a future phase.");
     println!();
     Ok(())

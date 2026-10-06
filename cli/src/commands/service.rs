@@ -35,19 +35,31 @@ pub fn handle(action: ServiceAction) -> Result<()> {
 
 fn list_services() -> Result<()> {
     let output = Command::new("systemctl")
-        .args(["list-units", "--type=service", "--no-pager", "--plain", "--no-legend"])
+        .args([
+            "list-units",
+            "--type=service",
+            "--no-pager",
+            "--plain",
+            "--no-legend",
+        ])
         .output()
         .context("Failed to run systemctl — is this a systemd system?")?;
 
     let stdout = String::from_utf8_lossy(&output.stdout);
 
     println!();
-    println!("  {} {}", "⬢".bright_blue(), "Services".bold().bright_white());
+    println!(
+        "  {} {}",
+        "⬢".bright_blue(),
+        "Services".bold().bright_white()
+    );
     println!("  {}", "─".repeat(60).dimmed());
-    println!("  {:<40} {:<10} {}",
+    println!(
+        "  {:<40} {:<10} {}",
         "NAME".dimmed(),
         "STATE".dimmed(),
-        "DESCRIPTION".dimmed());
+        "DESCRIPTION".dimmed()
+    );
     println!("  {}", "─".repeat(60).dimmed());
 
     for line in stdout.lines().take(30) {
@@ -66,10 +78,12 @@ fn list_services() -> Result<()> {
             _ => active.bright_yellow(),
         };
 
-        println!("  {:<40} {:<10} {}",
+        println!(
+            "  {:<40} {:<10} {}",
             name.bright_white(),
             state_colored,
-            desc.dimmed());
+            desc.dimmed()
+        );
     }
 
     println!();
@@ -78,7 +92,12 @@ fn list_services() -> Result<()> {
 
 fn control_service(action: &str, name: &str) -> Result<()> {
     println!();
-    println!("  {} {} {}...", "→".bright_blue(), action, name.bright_white());
+    println!(
+        "  {} {} {}...",
+        "→".bright_blue(),
+        action,
+        name.bright_white()
+    );
 
     let output = Command::new("systemctl")
         .args([action, name])
@@ -86,10 +105,20 @@ fn control_service(action: &str, name: &str) -> Result<()> {
         .context("Failed to run systemctl")?;
 
     if output.status.success() {
-        println!("  {} {} {}", "✓".bright_green(), name.bright_white(), format!("{action}ed").dimmed());
+        println!(
+            "  {} {} {}",
+            "✓".bright_green(),
+            name.bright_white(),
+            format!("{action}ed").dimmed()
+        );
     } else {
         let stderr = String::from_utf8_lossy(&output.stderr);
-        println!("  {} Failed to {} {}", "✗".bright_red(), action, name.bright_white());
+        println!(
+            "  {} Failed to {} {}",
+            "✗".bright_red(),
+            action,
+            name.bright_white()
+        );
         if !stderr.is_empty() {
             println!("  {}", stderr.trim().dimmed());
         }
@@ -106,7 +135,12 @@ fn show_logs(name: &str) -> Result<()> {
         .context("Failed to run journalctl")?;
 
     println!();
-    println!("  {} {} {}", "⬢".bright_blue(), "Logs:".dimmed(), name.bold().bright_white());
+    println!(
+        "  {} {} {}",
+        "⬢".bright_blue(),
+        "Logs:".dimmed(),
+        name.bold().bright_white()
+    );
     println!("  {}", "─".repeat(60).dimmed());
 
     let stdout = String::from_utf8_lossy(&output.stdout);

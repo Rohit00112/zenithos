@@ -10,14 +10,18 @@
 use anyhow::Result;
 use colored::Colorize;
 use std::process::Command;
-use sysinfo::{System, Disks};
+use sysinfo::{Disks, System};
 
 pub fn handle() -> Result<()> {
     let mut sys = System::new_all();
     sys.refresh_all();
 
     println!();
-    println!("  {} {}", "⬢".bright_blue(), "System Diagnostics".bold().bright_white());
+    println!(
+        "  {} {}",
+        "⬢".bright_blue(),
+        "System Diagnostics".bold().bright_white()
+    );
     println!("  {}", "─".repeat(60).dimmed());
 
     let mut issues = 0;
@@ -27,7 +31,11 @@ pub fn handle() -> Result<()> {
     let used = sys.used_memory();
     let mem_pct = if total > 0 { used * 100 / total } else { 0 };
     if mem_pct >= 90 {
-        println!("  {} Memory critically high: {}% used", "✗".bright_red(), mem_pct);
+        println!(
+            "  {} Memory critically high: {}% used",
+            "✗".bright_red(),
+            mem_pct
+        );
         issues += 1;
     } else if mem_pct >= 75 {
         println!("  {} Memory high: {}% used", "⚠".bright_yellow(), mem_pct);
@@ -40,7 +48,11 @@ pub fn handle() -> Result<()> {
     if total_swap > 0 {
         let swap_pct = used_swap * 100 / total_swap;
         if swap_pct >= 80 {
-            println!("  {} Swap critically high: {}% used", "✗".bright_red(), swap_pct);
+            println!(
+                "  {} Swap critically high: {}% used",
+                "✗".bright_red(),
+                swap_pct
+            );
             issues += 1;
         }
     }
@@ -57,12 +69,20 @@ pub fn handle() -> Result<()> {
         let mount = disk.mount_point().display().to_string();
 
         if used_pct >= 95 {
-            println!("  {} Disk {} is critically full: {}% used",
-                "✗".bright_red(), mount, used_pct);
+            println!(
+                "  {} Disk {} is critically full: {}% used",
+                "✗".bright_red(),
+                mount,
+                used_pct
+            );
             issues += 1;
         } else if used_pct >= 85 {
-            println!("  {} Disk {} is nearly full: {}% used",
-                "⚠".bright_yellow(), mount, used_pct);
+            println!(
+                "  {} Disk {} is nearly full: {}% used",
+                "⚠".bright_yellow(),
+                mount,
+                used_pct
+            );
             issues += 1;
         }
     }
@@ -73,9 +93,7 @@ pub fn handle() -> Result<()> {
         .output()
     {
         let stdout = String::from_utf8_lossy(&output.stdout);
-        let failed: Vec<&str> = stdout.lines()
-            .filter(|l| !l.is_empty())
-            .collect();
+        let failed: Vec<&str> = stdout.lines().filter(|l| !l.is_empty()).collect();
 
         if !failed.is_empty() {
             println!("  {} Failed services:", "✗".bright_red());
@@ -93,9 +111,7 @@ pub fn handle() -> Result<()> {
         .output()
     {
         let stdout = String::from_utf8_lossy(&output.stdout);
-        let lines: Vec<&str> = stdout.lines()
-            .filter(|l| !l.is_empty())
-            .collect();
+        let lines: Vec<&str> = stdout.lines().filter(|l| !l.is_empty()).collect();
 
         if !lines.is_empty() {
             println!("  {} Recent kernel errors:", "⚠".bright_yellow());

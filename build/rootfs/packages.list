@@ -65,3 +65,6 @@ pciutils
 usbutils
 lshw
 dmidecode
+
+# GTK4 and Layer Shell
+libgtk-4-1

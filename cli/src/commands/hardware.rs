@@ -7,7 +7,7 @@
 use anyhow::Result;
 use clap::Subcommand;
 use colored::Colorize;
-use sysinfo::{System, Disks, Components};
+use sysinfo::{Components, Disks, System};
 
 #[derive(Subcommand)]
 pub enum HardwareAction {
@@ -26,26 +26,52 @@ fn show_info() -> Result<()> {
     sys.refresh_all();
 
     println!();
-    println!("  {} {}", "⬢".bright_blue(), "Hardware Information".bold().bright_white());
+    println!(
+        "  {} {}",
+        "⬢".bright_blue(),
+        "Hardware Information".bold().bright_white()
+    );
     println!("  {}", "─".repeat(50).dimmed());
 
     // CPU
     println!();
     println!("  {}", "CPU".bold());
     if !sys.cpus().is_empty() {
-        println!("    {} {}", "Model:".dimmed(), sys.cpus()[0].brand().bright_white());
-        println!("    {} {}", "Cores:".dimmed(), sys.cpus().len().to_string().bright_white());
-        println!("    {} {} MHz", "Frequency:".dimmed(),
-            sys.cpus()[0].frequency().to_string().bright_white());
+        println!(
+            "    {} {}",
+            "Model:".dimmed(),
+            sys.cpus()[0].brand().bright_white()
+        );
+        println!(
+            "    {} {}",
+            "Cores:".dimmed(),
+            sys.cpus().len().to_string().bright_white()
+        );
+        println!(
+            "    {} {} MHz",
+            "Frequency:".dimmed(),
+            sys.cpus()[0].frequency().to_string().bright_white()
+        );
     }
 
     // Memory
     println!();
     println!("  {}", "Memory".bold());
-    println!("    {} {}", "Total:".dimmed(), format_bytes(sys.total_memory()).bright_white());
-    println!("    {} {}", "Used:".dimmed(), format_bytes(sys.used_memory()).bright_white());
-    println!("    {} {}", "Available:".dimmed(),
-        format_bytes(sys.total_memory() - sys.used_memory()).bright_white());
+    println!(
+        "    {} {}",
+        "Total:".dimmed(),
+        format_bytes(sys.total_memory()).bright_white()
+    );
+    println!(
+        "    {} {}",
+        "Used:".dimmed(),
+        format_bytes(sys.used_memory()).bright_white()
+    );
+    println!(
+        "    {} {}",
+        "Available:".dimmed(),
+        format_bytes(sys.total_memory() - sys.used_memory()).bright_white()
+    );
 
     // Disks
     let disks = Disks::new_with_refreshed_list();
@@ -58,12 +84,14 @@ fn show_info() -> Result<()> {
         let used = total - avail;
         let fs = disk.file_system().to_string_lossy();
 
-        println!("    {} {} ({}) — {} / {} used",
+        println!(
+            "    {} {} ({}) — {} / {} used",
             "●".bright_blue(),
             disk.name().to_string_lossy().bright_white(),
             mount,
             format_bytes(used),
-            format_bytes(total));
+            format_bytes(total)
+        );
         println!("      {} {}", "Filesystem:".dimmed(), fs);
     }
 
@@ -73,10 +101,12 @@ fn show_info() -> Result<()> {
         println!();
         println!("  {}", "Sensors".bold());
         for comp in components.list() {
-            println!("    {} {} — {:.1}°C",
+            println!(
+                "    {} {} — {:.1}°C",
                 "🌡".dimmed(),
                 comp.label().bright_white(),
-                comp.temperature());
+                comp.temperature()
+            );
         }
     }
 

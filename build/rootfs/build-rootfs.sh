@@ -13,8 +13,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 ROOTFS_DIR="$SCRIPT_DIR/rootfs"
-SUITE="${DEBIAN_SUITE:-bookworm}"
-MIRROR="${DEBIAN_MIRROR:-http://deb.debian.org/debian}"
+SUITE="${DEBIAN_SUITE:-noble}"
+MIRROR="${DEBIAN_MIRROR:-http://archive.ubuntu.com/ubuntu}"
 ARCH="amd64"
 
 # Colors
@@ -60,7 +60,7 @@ log "This may take several minutes..."
 
 PACKAGES=$(cat "$SCRIPT_DIR/packages.list" | grep -v '^#' | grep -v '^$' | tr '\n' ',')
 
-debootstrap \
+debootstrap --components=main,universe,restricted,multiverse \\
     --arch="$ARCH" \
     --include="$PACKAGES" \
     "$SUITE" \
@@ -92,6 +92,18 @@ cp "$SCRIPT_DIR/packages-desktop.list" "$ROOTFS_DIR/tmp/"
 # Copy Zenith binaries (if built)
 ZENITH_BIN_DIR="$ROOTFS_DIR/usr/local/bin"
 mkdir -p "$ZENITH_BIN_DIR"
+
+# Copy gtk4-layer-shell built SO from host if present
+if ls /usr/local/lib/x86_64-linux-gnu/libgtk4-layer-shell.so* 1> /dev/null 2>&1; then
+    mkdir -p "$ROOTFS_DIR/usr/local/lib/x86_64-linux-gnu/"
+    cp -a /usr/local/lib/x86_64-linux-gnu/libgtk4-layer-shell.so* "$ROOTFS_DIR/usr/local/lib/x86_64-linux-gnu/"
+    chroot "$ROOTFS_DIR" ldconfig
+fi
+if ls /usr/lib/x86_64-linux-gnu/libgtk4-layer-shell.so* 1> /dev/null 2>&1; then
+    mkdir -p "$ROOTFS_DIR/usr/lib/x86_64-linux-gnu/"
+    cp -a /usr/lib/x86_64-linux-gnu/libgtk4-layer-shell.so* "$ROOTFS_DIR/usr/lib/x86_64-linux-gnu/"
+    chroot "$ROOTFS_DIR" ldconfig
+fi
 
 # Copy compositor
 if [[ -f "$PROJECT_DIR/desktop/zenith-compositor/builddir/zenith-compositor" ]]; then

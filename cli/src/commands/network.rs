@@ -25,23 +25,33 @@ fn show_status() -> Result<()> {
     let networks = Networks::new_with_refreshed_list();
 
     println!();
-    println!("  {} {}", "⬢".bright_blue(), "Network Status".bold().bright_white());
+    println!(
+        "  {} {}",
+        "⬢".bright_blue(),
+        "Network Status".bold().bright_white()
+    );
     println!("  {}", "─".repeat(50).dimmed());
 
     for (name, data) in &networks {
         let rx = data.total_received();
         let tx = data.total_transmitted();
 
-        println!("  {} {}",
-            "●".bright_green(),
-            name.bold().bright_white());
-        println!("    {} {}  {} {}",
-            "↓".dimmed(), format_bytes(rx),
-            "↑".dimmed(), format_bytes(tx));
+        println!("  {} {}", "●".bright_green(), name.bold().bright_white());
+        println!(
+            "    {} {}  {} {}",
+            "↓".dimmed(),
+            format_bytes(rx),
+            "↑".dimmed(),
+            format_bytes(tx)
+        );
     }
 
     if networks.list().is_empty() {
-        println!("  {} {}", "✗".bright_red(), "No network interfaces found".dimmed());
+        println!(
+            "  {} {}",
+            "✗".bright_red(),
+            "No network interfaces found".dimmed()
+        );
     }
 
     println!();

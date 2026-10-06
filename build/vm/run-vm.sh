@@ -61,13 +61,18 @@ if [[ ! -f "$DISK_FILE" ]]; then
     qemu-img create -f qcow2 "$DISK_FILE" "$DISK_SIZE"
 fi
 
+# Determine acceleration based on host OS
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    ACCEL="-machine type=q35 -cpu qemu64"
+else
+    ACCEL="-enable-kvm -machine type=q35,accel=kvm -cpu host"
+fi
+
 # Launch QEMU
 exec qemu-system-x86_64 \
-    -enable-kvm \
+    $ACCEL \
     -m "$RAM" \
     -smp "$CPUS" \
-    -cpu host \
-    -machine type=q35,accel=kvm \
     -device virtio-vga-gl \
     -display sdl,gl=on \
     -device virtio-net-pci,netdev=net0 \

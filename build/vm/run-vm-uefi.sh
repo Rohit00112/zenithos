@@ -1,7 +1,7 @@
 #!/bin/bash
 # Zenith OS — QEMU VM Launcher (UEFI)
 #
-# Same as run-vm.sh but boots in UEFI mode using OVMF.
+# Launches the Zenith OS ISO in a QEMU virtual machine using UEFI firmware.
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -15,8 +15,28 @@ RAM="${QEMU_RAM:-2G}"
 CPUS="${QEMU_CPUS:-2}"
 ISO=""
 DISK_FILE="$DIST_DIR/zenith-vm-disk-uefi.qcow2"
-OVMF_CODE="${OVMF_PATH:-/usr/share/OVMF/OVMF_CODE.fd}"
-OVMF_VARS="$DIST_DIR/OVMF_VARS.fd"
+DISK_SIZE="20G"
+
+# Locate OVMF firmware
+OVMF_CODE=""
+OVMF_VARS_TEMPLATE=""
+
+if [[ -f /usr/share/OVMF/OVMF_CODE.fd ]]; then
+    OVMF_CODE="/usr/share/OVMF/OVMF_CODE.fd"
+    OVMF_VARS_TEMPLATE="/usr/share/OVMF/OVMF_VARS.fd"
+elif [[ -f /opt/homebrew/share/qemu/edk2-x86_64-code.fd ]]; then
+    OVMF_CODE="/opt/homebrew/share/qemu/edk2-x86_64-code.fd"
+    OVMF_VARS_TEMPLATE="/opt/homebrew/share/qemu/edk2-i386-vars.fd"
+elif [[ -n "${OVMF_PATH:-}" && -f "$OVMF_PATH" ]]; then
+    OVMF_CODE="$OVMF_PATH"
+    OVMF_VARS_TEMPLATE="${OVMF_CODE%CODE*}VARS.fd"
+fi
+
+if [[ -z "$OVMF_CODE" ]]; then
+    echo "Error: OVMF firmware not found."
+    echo "Install: sudo apt install ovmf (Linux) or brew install qemu (macOS)"
+    exit 1
+fi
 
 # Find ISO
 ISO=$(ls "$DIST_DIR"/zenith-os-*.iso 2>/dev/null | sort -V | tail -1)
@@ -26,22 +46,20 @@ if [[ -z "$ISO" || ! -f "$ISO" ]]; then
     exit 1
 fi
 
-if [[ ! -f "$OVMF_CODE" ]]; then
-    echo "Error: OVMF firmware not found at $OVMF_CODE"
-    echo "Install it with: sudo apt install ovmf"
-    exit 1
-fi
-
-# Create OVMF vars copy if needed
+# Create OVMF vars copy
+OVMF_VARS="$DIST_DIR/OVMF_VARS.fd"
 if [[ ! -f "$OVMF_VARS" ]]; then
-    cp /usr/share/OVMF/OVMF_VARS.fd "$OVMF_VARS" 2>/dev/null || \
-    cp "${OVMF_CODE%CODE*}VARS.fd" "$OVMF_VARS" 2>/dev/null || \
-    qemu-img create -f raw "$OVMF_VARS" 256K
+    if [[ -n "$OVMF_VARS_TEMPLATE" && -f "$OVMF_VARS_TEMPLATE" ]]; then
+        cp "$OVMF_VARS_TEMPLATE" "$OVMF_VARS"
+    else
+        qemu-img create -f raw "$OVMF_VARS" 256K
+    fi
 fi
 
 # Create disk
 if [[ ! -f "$DISK_FILE" ]]; then
-    qemu-img create -f qcow2 "$DISK_FILE" 20G
+    echo "Creating VM disk: $DISK_FILE ($DISK_SIZE)"
+    qemu-img create -f qcow2 "$DISK_FILE" "$DISK_SIZE"
 fi
 
 echo "========================================="
@@ -51,12 +69,17 @@ echo " RAM:  $RAM"
 echo " CPUs: $CPUS"
 echo "========================================="
 
+# Detect host acceleration
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    ACCEL="-machine type=q35 -cpu qemu64"
+else
+    ACCEL="-enable-kvm -machine type=q35,accel=kvm -cpu host"
+fi
+
 exec qemu-system-x86_64 \
-    -enable-kvm \
+    $ACCEL \
     -m "$RAM" \
     -smp "$CPUS" \
-    -cpu host \
-    -machine type=q35,accel=kvm \
     -drive if=pflash,format=raw,readonly=on,file="$OVMF_CODE" \
     -drive if=pflash,format=raw,file="$OVMF_VARS" \
     -device virtio-vga-gl \

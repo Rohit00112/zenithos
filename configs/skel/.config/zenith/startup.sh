@@ -5,6 +5,9 @@
 # Wait for Wayland display to be ready
 sleep 1
 
+# Start the background
+zenith-wallpaper &
+
 # Start the top panel
 zenith-panel &
 

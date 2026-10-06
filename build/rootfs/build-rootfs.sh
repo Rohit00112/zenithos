@@ -108,7 +108,19 @@ fi\
 # Copy dock\
 if [[ -f "$PROJECT_DIR/desktop/zenith-dock/builddir/zenith-dock" ]]; then\
     cp "$PROJECT_DIR/desktop/zenith-dock/builddir/zenith-dock" "$ZENITH_BIN_DIR/"\
-    ok "Installed zenith-dock"
+    ok "Installed zenith-dock"\
+fi\
+\
+# Copy launcher\
+if [[ -f "$PROJECT_DIR/desktop/zenith-launcher/builddir/zenith-launcher" ]]; then\
+    cp "$PROJECT_DIR/desktop/zenith-launcher/builddir/zenith-launcher" "$ZENITH_BIN_DIR/"\
+    ok "Installed zenith-launcher"\
+fi\
+\
+# Copy wallpaper\
+if [[ -f "$PROJECT_DIR/desktop/zenith-wallpaper/builddir/zenith-wallpaper" ]]; then\
+    cp "$PROJECT_DIR/desktop/zenith-wallpaper/builddir/zenith-wallpaper" "$ZENITH_BIN_DIR/"\
+    ok "Installed zenith-wallpaper"
 fi
 
 # Copy session manager

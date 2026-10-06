@@ -60,6 +60,14 @@ bool zenith_keybinding_handle(struct zenith_compositor *compositor,
                                uint32_t modifiers, xkb_keysym_t sym) {
 
     /*
+     * Super + D or Super + Space → Launch application launcher
+     */
+    if ((modifiers & MOD_SUPER) && (sym == XKB_KEY_d || sym == XKB_KEY_space)) {
+        launch_program("zenith-launcher");
+        return true;
+    }
+
+    /*
      * Super + Enter → Launch terminal
      */
     if ((modifiers & MOD_SUPER) && sym == XKB_KEY_Return) {

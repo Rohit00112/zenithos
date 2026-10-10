@@ -28,12 +28,13 @@
 - [ ] Panel: battery indicator
 
 ## Phase 2 — Desktop Shell (Priority: MEDIUM)
-- [ ] Application launcher
-- [ ] Application dock
-- [ ] Notification daemon
+- [x] Application launcher
+- [x] Application dock
+- [x] Notification daemon
+- [x] GTK4 theme
 - [ ] Named workspaces
 - [ ] Dynamic modes
-- [ ] GTK4 theme
+- [ ] Window decorations
 
 ## Future Phases
 See ROADMAP.md

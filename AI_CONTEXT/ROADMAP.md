@@ -18,15 +18,15 @@
 **Deliverable:** Bootable ISO → GRUB → Plymouth → Wayland → Panel → Terminal
 
 ## Phase 2: Desktop Shell
-**Status:** In Progress
+**Status:** Mostly Complete
 
-- [ ] Application launcher
-- [ ] Application dock
-- [ ] Notification daemon
-- [ ] Workspace system with named workspaces
+- [x] Application launcher
+- [x] Application dock
+- [x] Notification daemon
+- [x] Wallpaper manager
+- [x] GTK4 theme (Zenith Dark)
+- [ ] Workspace system with named workspaces (partial - needs naming)
 - [ ] Dynamic modes (Focus, Power, Developer)
-- [ ] Wallpaper manager
-- [ ] GTK4 theme (Zenith Dark)
 - [ ] Window decorations
 
 ## Phase 3: Core Applications

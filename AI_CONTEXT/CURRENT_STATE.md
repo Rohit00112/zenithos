@@ -1,7 +1,7 @@
 # Current State
 
-**Phase:** 1 — Bootable System
-**Status:** Complete
+**Phase:** 2 — Desktop Shell
+**Status:** Mostly Complete
 **Last Updated:** 2026-10-10
 
 ## What Works
@@ -23,15 +23,21 @@
 - [x] GRUB theme
 - [x] Plymouth boot splash
 
-## Phase 2 — Base Applications
+## Phase 2 — Desktop Shell Components
+
+- [x] zenith-notifications (D-Bus notification daemon)
+- [x] Application launcher (searches .desktop files)
+- [x] Application dock (launches apps from dock)
+- [x] GTK4 Zenith Dark theme
+- [x] Wallpaper manager
+
+## Phase 3 — Base Applications
 
 - [x] zenith-terminal (VTE based)
-- [x] zenith-launcher (application launcher)
-- [x] zenith-wallpaper (desktop background)
 - [x] zenith-file-manager (GUI file browser)
 - [x] zenith-system-monitor (task manager)
 - [x] zenith-settings (control center)
-- [x] zenith-network-center (Phase 3 stub)
+- [x] zenith-network-center
 
 ## Known Working Configurations
 

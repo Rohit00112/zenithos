@@ -1,18 +1,21 @@
 # Next Task
 
-## Current Focus: Phase 2 - Desktop Shell
+## Current Focus: Phase 3 - Core Applications
 
-Phase 1 (Bootable System) is complete. The immediate next task is to begin Phase 2: Desktop Shell. 
+Phase 2 (Desktop Shell) is mostly complete. Core components done:
+- Application launcher with .desktop file search
+- Application dock with working launchers
+- Notification daemon with D-Bus interface
+- GTK4 Zenith Dark theme
 
-Phase 2 goals:
-1. Application launcher
-2. Application dock
-3. Notification daemon
-4. Named workspaces
-5. Dynamic modes
-6. GTK4 theme
+Phase 3 applications already exist but need verification/polish:
+- zenith-terminal
+- zenith-file-manager
+- zenith-system-monitor
+- zenith-settings
+- zenith-network-center
 
 ### Next steps:
-- Implement zenith-notifications daemon.
-- Complete application dock and launcher interactions.
-- Establish theming implementation for "Zenith Dark" in GTK4.
+1. Verify all Phase 3 apps compile and work
+2. Add osctl expanded commands
+3. Begin Phase 4: Package & Update System

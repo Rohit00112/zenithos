@@ -10,6 +10,7 @@
 
 #include <gtk/gtk.h>
 #include <gtk4-layer-shell.h>
+#include <stdlib.h>
 
 #include "dock.h"
 
@@ -48,7 +49,18 @@ static void apply_dock_css(void) {
     g_object_unref(provider);
 }
 
-static GtkWidget* create_dock_icon(const char* icon_name, const char* tooltip) {
+static void on_dock_icon_clicked(GtkButton *button, gpointer user_data) {
+    (void)button;
+    const char *cmd = user_data;
+    if (cmd) {
+        char full_cmd[256];
+        snprintf(full_cmd, sizeof(full_cmd), "%s &", cmd);
+        int ret = system(full_cmd);
+        (void)ret;
+    }
+}
+
+static GtkWidget* create_dock_icon(const char* icon_name, const char* tooltip, const char* cmd) {
     GtkWidget *button = gtk_button_new();
     GtkWidget *icon = gtk_image_new_from_icon_name(icon_name);
 
@@ -58,6 +70,11 @@ static GtkWidget* create_dock_icon(const char* icon_name, const char* tooltip) {
     gtk_widget_add_css_class(button, "dock-icon");
     gtk_widget_set_tooltip_text(button, tooltip);
     gtk_widget_set_focusable(button, FALSE);
+    
+    char *cmd_dup = g_strdup(cmd);
+    g_signal_connect(button, "clicked", G_CALLBACK(on_dock_icon_clicked), cmd_dup);
+    
+    // We should clean up cmd_dup but for the dock lifetime it's fine
 
     return button;
 }
@@ -90,11 +107,12 @@ void zenith_dock_activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
     gtk_window_set_child(window, box);
 
-    /* For Phase 1, just hardcode some stub launchers */
-    gtk_box_append(GTK_BOX(box), create_dock_icon("utilities-terminal-symbolic", "Terminal"));
-    gtk_box_append(GTK_BOX(box), create_dock_icon("system-file-manager-symbolic", "Files"));
-    gtk_box_append(GTK_BOX(box), create_dock_icon("web-browser-symbolic", "Browser"));
-    gtk_box_append(GTK_BOX(box), create_dock_icon("preferences-system-symbolic", "Settings"));
+    /* Phase 2: Add launchers */
+    gtk_box_append(GTK_BOX(box), create_dock_icon("view-app-grid-symbolic", "Launcher", "zenith-launcher"));
+    gtk_box_append(GTK_BOX(box), create_dock_icon("utilities-terminal-symbolic", "Terminal", "zenith-terminal"));
+    gtk_box_append(GTK_BOX(box), create_dock_icon("system-file-manager-symbolic", "Files", "zenith-file-manager"));
+    gtk_box_append(GTK_BOX(box), create_dock_icon("preferences-system-symbolic", "Settings", "zenith-settings"));
+    gtk_box_append(GTK_BOX(box), create_dock_icon("utilities-system-monitor-symbolic", "Monitor", "zenith-system-monitor"));
 
     gtk_window_present(window);
 }

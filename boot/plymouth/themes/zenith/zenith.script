@@ -1,0 +1,14 @@
+# Zenith OS Plymouth Script
+
+# Colors
+Window.SetBackgroundTopColor (13 / 255.0, 17 / 255.0, 23 / 255.0);
+Window.SetBackgroundBottomColor (13 / 255.0, 17 / 255.0, 23 / 255.0);
+
+# Just simple text for now if no images
+fun refresh_callback ()
+{
+    # In a full theme, we would rotate a spinner or pulse the logo.
+    # We will keep it minimal.
+}
+
+Plymouth.SetRefreshFunction (refresh_callback);

@@ -1,8 +1,8 @@
 # Current State
 
 **Phase:** 1 — Bootable System
-**Status:** In Progress
-**Last Updated:** 2024-01-01
+**Status:** Complete
+**Last Updated:** 2026-10-10
 
 ## What Works
 
@@ -20,6 +20,8 @@
 - [x] Root filesystem (debootstrap)
 - [x] ISO generation
 - [x] QEMU testing
+- [x] GRUB theme
+- [x] Plymouth boot splash
 
 ## Phase 2 — Base Applications
 

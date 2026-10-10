@@ -3,22 +3,22 @@
 ## Phase 1 — Bootable System (Priority: HIGH)
 
 ### Must Have
-- [ ] Get zenith-compositor compiling with meson
-- [ ] Implement basic window management (xdg-shell)
-- [ ] Implement output management (display detection)
-- [ ] Implement input handling (keyboard, pointer)
-- [ ] Implement 4 virtual workspaces
-- [ ] Implement keybinding system (Super+Enter → terminal)
-- [ ] Get zenith-panel compiling with meson
-- [ ] Panel: clock widget
-- [ ] Panel: workspace indicator widget
-- [ ] Create zenith-session desktop entry for display manager
-- [ ] Write build-rootfs.sh (debootstrap + customization)
-- [ ] Write build-iso.sh (squashfs + grub)
-- [ ] Write run-vm.sh (QEMU launch script)
-- [ ] Implement `osctl system status`
-- [ ] Create GRUB theme
-- [ ] Create Plymouth theme
+- [x] Get zenith-compositor compiling with meson
+- [x] Implement basic window management (xdg-shell)
+- [x] Implement output management (display detection)
+- [x] Implement input handling (keyboard, pointer)
+- [x] Implement 4 virtual workspaces
+- [x] Implement keybinding system (Super+Enter → terminal)
+- [x] Get zenith-panel compiling with meson
+- [x] Panel: clock widget
+- [x] Panel: workspace indicator widget
+- [x] Create zenith-session desktop entry for display manager
+- [x] Write build-rootfs.sh (debootstrap + customization)
+- [x] Write build-iso.sh (squashfs + grub)
+- [x] Write run-vm.sh (QEMU launch script)
+- [x] Implement `osctl system status`
+- [x] Create GRUB theme
+- [x] Create Plymouth theme
 
 ### Nice to Have
 - [ ] Server-side window decorations

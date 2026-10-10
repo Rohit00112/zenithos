@@ -1,24 +1,24 @@
 # Roadmap
 
 ## Phase 1: Bootable System (Current)
-**Status:** In Progress
+**Status:** Complete
 
 - [x] Directory structure
 - [x] Build system (Makefile)
-- [ ] Wayland compositor (zenith-compositor)
-- [ ] Panel (zenith-panel)
-- [ ] Session management (zenith-session)
-- [ ] osctl CLI (basic system status)
-- [ ] GRUB theme
-- [ ] Plymouth boot splash
-- [ ] Root filesystem generation
-- [ ] ISO generation
-- [ ] QEMU test script
+- [x] Wayland compositor (zenith-compositor)
+- [x] Panel (zenith-panel)
+- [x] Session management (zenith-session)
+- [x] osctl CLI (basic system status)
+- [x] GRUB theme
+- [x] Plymouth boot splash
+- [x] Root filesystem generation
+- [x] ISO generation
+- [x] QEMU test script
 
 **Deliverable:** Bootable ISO → GRUB → Plymouth → Wayland → Panel → Terminal
 
 ## Phase 2: Desktop Shell
-**Status:** Not Started
+**Status:** In Progress
 
 - [ ] Application launcher
 - [ ] Application dock

@@ -1,0 +1,37 @@
+# Zenith OS GRUB Theme
+
+title-text: "Zenith OS"
+title-font: "Unifont Regular 16"
+title-color: "#E6EDF3"
+message-font: "Unifont Regular 14"
+message-color: "#8B949E"
+message-bg-color: "#0D1117"
+terminal-font: "Unifont Regular 14"
+
+desktop-color: "#0D1117"
+desktop-image: ""
+
++ boot_menu {
+    left = 20%
+    top = 30%
+    width = 60%
+    height = 40%
+    item_font = "Unifont Regular 16"
+    item_color = "#E6EDF3"
+    selected_item_color = "#58A6FF"
+    item_height = 24
+    item_spacing = 8
+    selected_item_pixmap_style = "select_*.png"
+}
+
++ progress_bar {
+    id = "__timeout__"
+    left = 30%
+    top = 80%
+    width = 40%
+    height = 20
+    text_color = "#8B949E"
+    border_color = "#30363D"
+    bg_color = "#161B22"
+    fg_color = "#58A6FF"
+}
